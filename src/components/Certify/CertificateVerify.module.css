@@ -1,0 +1,373 @@
+/* -------------------------------------------------------
+   CONTAINER + BACKGROUND
+------------------------------------------------------- */
+.container {
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    padding: 2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1e3c72, #2a5298 50%, #7e22ce);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 520px;
+    height: 520px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 50%;
+    filter: blur(120px);
+    transform: rotate(10deg);
+    z-index: -1;
+}
+
+.backgroundPattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background-image:
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, .12) 0%, transparent 45%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, .08) 0%, transparent 45%),
+        radial-gradient(circle at 40% 20%, rgba(255, 255, 255, .06) 0%, transparent 45%);
+    pointer-events: none;
+    z-index: -2;
+}
+
+/* -------------------------------------------------------
+   LANGUAGE TOGGLE
+------------------------------------------------------- */
+.langToggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 99;
+}
+
+/* -------------------------------------------------------
+   CARDS
+------------------------------------------------------- */
+.successCard,
+.errorCard {
+    width: 100%;
+    max-width: 920px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 35px 100px rgba(0, 0, 0, 0.35);
+    position: relative;
+    z-index: 2;
+    animation: fadeSlide 0.6s ease-out;
+}
+
+.errorCard {
+    max-width: 760px;
+}
+
+/* Watermark */
+.successCard::after {
+    content: "";
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 260px;
+    height: 260px;
+    background: url('/MTIFavicon.png') no-repeat center / contain;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* -------------------------------------------------------
+   ICONS
+------------------------------------------------------- */
+.iconWrapper,
+.errorIconWrapper {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconWrapper {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 12px 36px rgba(16, 185, 129, .28);
+    animation: scaleIn 1s ease-out 0.2s both;
+    position: relative;
+}
+
+.iconWrapper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 4px solid rgba(16, 185, 129, .4);
+    animation: ring 3s ease-out infinite;
+}
+
+.errorIconWrapper {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    box-shadow: 0 12px 36px rgba(239, 68, 68, .28);
+    color: white;
+}
+
+.checkIcon {
+    width: 70px;
+    height: 70px;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, .12));
+}
+
+/* -------------------------------------------------------
+   TYPOGRAPHY
+------------------------------------------------------- */
+.title {
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    color: #0f172a;
+}
+
+.name {
+    width: 100%;
+    display: block;
+    font-size: 2.25rem;
+    font-weight: 800;
+    text-align: center;
+    color: white;
+
+    background: linear-gradient(135deg,
+            rgba(30, 60, 114, 0.85),
+            rgba(42, 82, 152, 0.85),
+            rgba(126, 34, 206, 0.85));
+
+    padding: 0.5rem 0.7rem;
+    border-radius: 12px;
+    margin-top: 4px;
+}
+
+.program {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.programSection {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, .03), rgba(124, 58, 237, .03));
+    border: 1px solid rgba(37, 99, 235, .06);
+}
+
+/* -------------------------------------------------------
+   DIVIDERS + METADATA
+------------------------------------------------------- */
+.divider {
+    height: 2px;
+    border-radius: 4px;
+    margin: 1.5rem 0;
+    background: linear-gradient(to right, transparent, rgba(37, 99, 235, .18), rgba(124, 58, 237, .18), transparent);
+}
+
+.metadata {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fbfdff, #f6f9fb);
+    border: 1px solid #e6eef7;
+}
+
+.metadataItem {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.metadataLabel {
+    font-size: .75rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.metadataValue {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+/* -------------------------------------------------------
+   FOOTER + STAMP
+------------------------------------------------------- */
+.footer {
+    padding-top: 1rem;
+    border-top: 1px solid #e9eef6;
+}
+
+.footerText {
+    text-align: center;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.footerWrapper {
+    position: relative;
+    margin-top: 1.5rem;
+}
+
+.stamp {
+    position: absolute;
+    bottom: 1px;
+    left: 50%;
+    transform: translateX(-50%) rotate(10deg);
+    width: 120px;
+    opacity: 0.3;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* -------------------------------------------------------
+   ERROR TEXT
+------------------------------------------------------- */
+.errorTitle {
+    color: #dc2626;
+}
+
+.errorMessage {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.errorSubtext {
+    color: #64748b;
+}
+
+/* -------------------------------------------------------
+   ANIMATIONS
+------------------------------------------------------- */
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes ring {
+    0% {
+        transform: scale(.6);
+        opacity: 0;
+    }
+
+    40% {
+        opacity: .35;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* -------------------------------------------------------
+   RESPONSIVE
+------------------------------------------------------- */
+@media (max-width: 992px) {
+
+    .successCard,
+    .errorCard {
+        padding: 2.25rem;
+        max-width: 720px;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .name {
+        font-size: 1.85rem;
+    }
+
+    .checkIcon {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .successCard,
+    .errorCard {
+        padding: 1.75rem;
+        border-radius: 14px;
+    }
+
+    .metadata {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 1.6rem;
+    }
+
+    .name {
+        font-size: 1.6rem;
+    }
+
+    .program {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .successCard,
+    .errorCard {
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .name {
+        font-size: 1.4rem;
+    }
+
+    .program {
+        font-size: 1rem;
+    }
+
+    .divider {
+        margin: .75rem 0;
+    }
+}

@@ -1,0 +1,81 @@
+.backupContainer {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 1.5rem;
+}
+
+.backupTitle {
+    color: #1e293b;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.progressContainer {
+    margin-top: 0.75rem;
+    padding: 0.5rem;
+    background: rgba(59, 130, 246, 0.05);
+    border-radius: 8px;
+}
+
+/* ✅ Animated Sync Icon (UNCHANGED) */
+.syncIcon {
+    animation: syncRotate 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    transform-origin: center;
+}
+
+@keyframes syncRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ✅ Backup Indicator (PULSE REMOVED) */
+.backupIndicator {
+    position: relative;
+}
+
+/* ✅ Responsive */
+@media (max-width: 768px) {
+    .backupContainer {
+        padding: 0.875rem;
+    }
+
+    .backupContainer :global(button) {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.7rem;
+    }
+
+    .syncIcon {
+        animation-duration: 2.5s;
+    }
+}
+
+@media (max-width: 480px) {
+    .backupContainer {
+        padding: 0.75rem;
+    }
+
+    .backupContainer :global(.mantine-Group-root) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .backupContainer :global(input) {
+        max-width: 100% !important;
+    }
+
+    .syncIcon {
+        animation-duration: 3s;
+    }
+}
