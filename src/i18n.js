@@ -9,18 +9,17 @@ i18n
   .init({
     lng: "en",
     fallbackLng: "en",
-    supportedLngs: [ "en", "ar"],
+    supportedLngs: ["en", "ar"],
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
     },
-    ns: [
-    //   "homepage/Hero",
-    //   "homepage/Stats",
-    //   "certify/CertificateVerify",
-    ], 
-    defaultNS: "homepage/Navbar",
+    ns: ["auth/AdminLogin"],
+    defaultNS: "auth/AdminLogin",
     interpolation: {
       escapeValue: false,
     },
+    react: {
+      useSuspense: false,
+    },
   });
-export default i18n;
+

@@ -1,0 +1,21 @@
+{
+  "title": "Admin Login",
+  "subtitle": "MTI Certificate Management",
+  "emailLabel": "Email Address",
+  "emailPlaceholder": "admin@example.com",
+  "passwordLabel": "Password",
+  "passwordPlaceholder": "Enter your password",
+  "signInButton": "Sign In",
+  "signingInButton": "Signing in...",
+  "footerText": "Secure Certificate Management System",
+  "subFooterText": "Product by Markaz Tadarus Indonesia",
+  "errors": {
+    "invalidEmailOrPassword": "Invalid email or password",
+    "invalidEmail": "Please enter a valid email address",
+    "userNotFound": "No account found with this email",
+    "wrongPassword": "Incorrect password",
+    "tooManyRequests": "Too many failed attempts. Please try again later",
+    "networkError": "Network error. Please check your connection",
+    "loginFailed": "Login failed. Please try again or check your credentials."
+  }
+}
