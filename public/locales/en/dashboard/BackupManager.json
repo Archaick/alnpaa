@@ -1,0 +1,21 @@
+{
+  "dataSafety": "Data Safety",
+  "backupRestore": "Backup & Restore",
+  "exportBackup": "Export Backup",
+  "importBackup": "Import Backup",
+  "chooseBackupFile": "Choose backup file",
+  "importing": "Importing",
+  "exporting": "Exporting",
+  "success": "Success",
+  "error": "Error",
+  "messages": {
+    "noFile": "Please select a backup file.",
+    "invalidFormat": "Invalid backup format.",
+    "missingFields": "Invalid certificate data: missing required fields",
+    "exportSuccess": "Successfully exported {{count}} certificates!",
+    "exportFailed": "Failed to export certificates.",
+    "importSuccess": "Import complete!\n✓ Imported: {{imported}}\n{{skipped}}",
+    "importSuccessSkipped": "⊘ Skipped (duplicates): {{skipped}}",
+    "importFailed": "Import failed."
+  }
+}

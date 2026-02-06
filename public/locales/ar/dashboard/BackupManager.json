@@ -1,0 +1,21 @@
+{
+  "dataSafety": "سلامة البيانات",
+  "backupRestore": "النسخة الاحتياطية والاستعادة",
+  "exportBackup": "تصدير النسخة الاحتياطية",
+  "importBackup": "استيراد النسخة الاحتياطية",
+  "chooseBackupFile": "اختر ملف النسخة الاحتياطية",
+  "importing": "جاري الاستيراد",
+  "exporting": "جاري التصدير",
+  "success": "نجاح",
+  "error": "خطأ",
+  "messages": {
+    "noFile": "يرجى تحديد ملف النسخة الاحتياطية.",
+    "invalidFormat": "تنسيق النسخة الاحتياطية غير صحيح.",
+    "missingFields": "بيانات شهادة غير صحيحة: حقول مفقودة",
+    "exportSuccess": "تم تصدير {{count}} شهادة بنجاح!",
+    "exportFailed": "فشل تصدير الشهادات.",
+    "importSuccess": "انتهى الاستيراد!\n✓ تم استيراد: {{imported}}\n{{skipped}}",
+    "importSuccessSkipped": "⊘ تم التخطي (نسخ مكررة): {{skipped}}",
+    "importFailed": "فشل الاستيراد."
+  }
+}

@@ -37,12 +37,15 @@ import {
     EmailAuthProvider,
     signOut,
 } from "firebase/auth";
+import { useTranslation } from "react-i18next";
+import LanguageToggle from "../LanguageToggle";
 
 const ITEMS_PER_PAGE = 5;
 const MAX_RETRIES = 3;
 const INPUT_MAX_LENGTH = 200;
 
 const Admin = () => {
+    const { t } = useTranslation("dashboard/Admin");
     const [certificates, setCertificates] = useState([]);
     const [newCert, setNewCert] = useState({ name: "", program: "" });
     const [searchTerm, setSearchTerm] = useState("");
@@ -111,7 +114,7 @@ const Admin = () => {
     const verifyAdminAuth = () => {
         const user = auth?.currentUser;
         if (!user) {
-            showNotification("error", "Authentication Required", "Please log in again. Redirecting...");
+            showNotification("error", t("errors.notAuthenticated"), t("errors.notAuthenticatedMessage"));
             setTimeout(() => signOut(auth).then(() => (window.location.href = "/cert-login")), 2000);
             return false;
         }
@@ -163,7 +166,7 @@ const Admin = () => {
         } catch (err) {
             console.error("Error fetching certificates:", err);
             // Do NOT sign out, just show error
-            showNotification("error", "Failed to Load", err.message || "Could not load certificates. Check your permissions.");
+            showNotification("error", t("errors.failedToLoad"), err.message || t("errors.failedToLoadMessage"));
         } finally {
             setLoading(false);
         }
@@ -179,7 +182,7 @@ const Admin = () => {
         const sanitizedProgram = sanitizeInput(newCert.program);
 
         if (!sanitizedName || !sanitizedProgram) {
-            showNotification("warning", "Invalid Input", "Please fill all fields with valid data.");
+            showNotification("warning", t("errors.invalidInput"), t("errors.invalidInputMessage"));
             return;
         }
 
@@ -208,13 +211,13 @@ const Admin = () => {
             setQrCodes((prev) => ({ ...prev, [docRef.id]: qrDataUrl }));
             setNewCert({ name: "", program: "" });
 
-            showNotification("success", "Certificate Added", `Certificate for ${sanitizedName} created successfully!`);
+            showNotification("success", t("notifications.certificateAdded"), t("notifications.certificateAddedSuccess", { name: sanitizedName }));
         } catch (err) {
             console.error("Error adding certificate:", err);
             const errorMessage = err.code === "permission-denied"
-                ? "Permission denied. Check Firestore security rules."
+                ? t("errors.permissionDenied")
                 : err.message || "An unexpected error occurred.";
-            showNotification("error", "Add Failed", errorMessage);
+            showNotification("error", t("errors.addFailed"), errorMessage);
         } finally {
             setActionLoading(false);
         }
@@ -229,18 +232,18 @@ const Admin = () => {
 
     const handleConfirmDelete = async () => {
         if (!deleteTargetId) {
-            showNotification("warning", "No Selection", "No certificate selected for deletion.");
+            showNotification("warning", t("errors.noSelection"), t("errors.noSelectionMessage"));
             return;
         }
 
         const currentUser = auth?.currentUser;
         if (!currentUser) {
-            showNotification("error", "Not Authenticated", "Please log in again.");
+            showNotification("error", t("errors.notAuthenticated"), t("errors.notAuthenticatedMessage"));
             return;
         }
 
         if (!reauthPassword) {
-            showNotification("warning", "Password Required", "Enter your password to confirm.");
+            showNotification("warning", t("errors.passwordRequired"), t("errors.passwordRequiredMessage"));
             return;
         }
 
@@ -257,15 +260,15 @@ const Admin = () => {
             });
 
             closeDeleteModal();
-            showNotification("success", "Certificate Deleted", "Certificate removed successfully.");
+            showNotification("success", t("notifications.certificateDeleted"), t("notifications.certificateDeletedSuccess"));
         } catch (err) {
             console.error("Delete error:", err);
             const errorMessage = err.code === "auth/wrong-password"
-                ? "Incorrect password. Please try again."
+                ? t("errors.incorrectPassword")
                 : err.code === "permission-denied"
-                    ? "Permission denied. Check Firestore security rules."
+                    ? t("errors.permissionDenied")
                     : err.message || "Deletion failed.";
-            showNotification("error", "Delete Failed", errorMessage);
+            showNotification("error", t("errors.deleteFailed"), errorMessage);
         } finally {
             setActionLoading(false);
         }
@@ -275,7 +278,7 @@ const Admin = () => {
     const handleDownloadQR = (cert) => {
         const url = qrCodes[cert.id];
         if (!url) {
-            showNotification("error", "QR Not Found", "QR code not available for download.");
+            showNotification("error", t("notifications.qrNotFound"), t("notifications.qrNotFoundMessage"));
             return;
         }
 
@@ -284,7 +287,7 @@ const Admin = () => {
         link.download = `QR_${sanitizeFilename(cert.name)}_${cert.code}.png`;
         link.click();
 
-        showNotification("success", "Download Started", "QR code downloaded successfully.");
+        showNotification("success", t("notifications.downloadStarted"), t("notifications.downloadSuccess"));
     };
 
     // ========== FILTERED CERTIFICATES ==========
@@ -295,7 +298,10 @@ const Admin = () => {
 
     return (
         <div className={styles.container}>
-            <Title order={2}>Admin Certificate Panel</Title>
+            <div className={styles.languageToggleWrapper}>
+                <LanguageToggle position="inline" />
+            </div>
+            <Title order={2}>{t("title")}</Title>
 
             {notification && (
                 <Alert
@@ -326,7 +332,7 @@ const Admin = () => {
                     onClick={() => signOut(auth).then(() => (window.location.href = "/cert-login"))}
                     className={styles.logoutBtn}
                 >
-                    Logout
+                    {t("buttons.logout")}
                 </Button>
             </div>
 
@@ -334,28 +340,28 @@ const Admin = () => {
 
             <div className={styles.form}>
                 <TextInput
-                    label="Name"
-                    placeholder="Participant Name"
+                    label={t("labels.name")}
+                    placeholder={t("placeholders.participantName")}
                     value={newCert.name}
                     onChange={(e) => setNewCert({ ...newCert, name: e.target.value })}
                     disabled={actionLoading}
                     maxLength={INPUT_MAX_LENGTH}
                 />
                 <TextInput
-                    label="Program"
-                    placeholder="Program Name"
+                    label={t("labels.program")}
+                    placeholder={t("placeholders.programName")}
                     value={newCert.program}
                     onChange={(e) => setNewCert({ ...newCert, program: e.target.value })}
                     disabled={actionLoading}
                     maxLength={INPUT_MAX_LENGTH}
                 />
                 <Button mt="sm" onClick={handleAdd} loading={actionLoading}>
-                    Add Certificate
+                    {t("buttons.addCertificate")}
                 </Button>
             </div>
 
             <TextInput
-                placeholder="Search by name or program..."
+                placeholder={t("labels.search")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 mb="md"
@@ -368,18 +374,18 @@ const Admin = () => {
                     <Table striped highlightOnHover withBorder>
                         <thead className="table-head">
                             <tr>
-                                <th>Name</th>
-                                <th>Program</th>
-                                <th>Code</th>
-                                <th>QR</th>
-                                <th>Actions</th>
+                                <th>{t("labels.name")}</th>
+                                <th>{t("labels.program")}</th>
+                                <th>{t("labels.code")}</th>
+                                <th>{t("labels.qr")}</th>
+                                <th>{t("labels.actions")}</th>
                             </tr>
                         </thead>
                         <tbody>
                             {filteredCertificates.length === 0 ? (
                                 <tr>
                                     <td colSpan={5} style={{ padding: "2rem", textAlign: "center" }}>
-                                        No certificates found
+                                        {t("notifications.certificateNotFound")}
                                     </td>
                                 </tr>
                             ) : (
@@ -440,21 +446,21 @@ const Admin = () => {
             <Modal
                 opened={deleteModalOpen}
                 onClose={closeDeleteModal}
-                title="Confirm Delete — re-enter password"
+                title={t("modals.deleteTitle")}
                 centered
                 size="sm"
             >
-                <Text mb="sm">To delete this certificate, re-enter your admin password.</Text>
+                <Text mb="sm">{t("modals.deleteMessage")}</Text>
                 <PasswordInput
-                    placeholder="Your password"
+                    placeholder={t("placeholders.password")}
                     value={reauthPassword}
                     onChange={(e) => setReauthPassword(e.target.value)}
                     required
                 />
                 <Group justify="flex-end" mt="md">
-                    <Button variant="default" onClick={closeDeleteModal}>Cancel</Button>
+                    <Button variant="default" onClick={closeDeleteModal}>{t("buttons.cancel")}</Button>
                     <Button color="red" loading={actionLoading} onClick={handleConfirmDelete}>
-                        Confirm Delete
+                        {t("buttons.confirmDelete")}
                     </Button>
                 </Group>
             </Modal>

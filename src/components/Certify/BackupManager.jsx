@@ -29,8 +29,10 @@ import {
 } from "@tabler/icons-react";
 
 import styles from "./BackupManager.module.css";
+import { useTranslation } from "react-i18next";
 
 const BackupManager = ({ onImportComplete }) => {
+    const { t } = useTranslation("dashboard/BackupManager");
     const [importing, setImporting] = useState(false);
     const [exporting, setExporting] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -80,14 +82,14 @@ const BackupManager = ({ onImportComplete }) => {
             setResultModal({
                 open: true,
                 success: true,
-                message: `Successfully exported ${allCertificates.length} certificates!`,
+                message: t("messages.exportSuccess", { count: allCertificates.length }),
             });
         } catch (err) {
             console.error("Export error:", err);
             setResultModal({
                 open: true,
                 success: false,
-                message: "Failed to export certificates.",
+                message: t("messages.exportFailed"),
             });
         } finally {
             setExporting(false);
@@ -102,7 +104,7 @@ const BackupManager = ({ onImportComplete }) => {
        - Only queries codes being imported (not entire DB)
     ------------------------------------------------------- */
     const handleImport = async () => {
-        if (!file) return alert("Please select a backup file.");
+        if (!file) return alert(t("messages.noFile"));
 
         setImporting(true);
         setProgress(0);
@@ -112,13 +114,13 @@ const BackupManager = ({ onImportComplete }) => {
             const data = JSON.parse(text);
 
             if (!Array.isArray(data)) {
-                throw new Error("Invalid backup format.");
+                throw new Error(t("messages.invalidFormat"));
             }
 
             // Validate all records first
             for (const cert of data) {
                 if (!cert.name || !cert.program || !cert.code) {
-                    throw new Error("Invalid certificate data: missing required fields");
+                    throw new Error(t("messages.missingFields"));
                 }
             }
 
@@ -184,8 +186,7 @@ const BackupManager = ({ onImportComplete }) => {
             setResultModal({
                 open: true,
                 success: true,
-                message: `Import complete!\n✓ Imported: ${imported}\n${skipped > 0 ? `⊘ Skipped (duplicates): ${skipped}` : ""
-                    }`,
+                message: `${t("messages.importSuccess", { imported, skipped: skipped > 0 ? t("messages.importSuccessSkipped", { skipped }) : "" })}`,
             });
 
             if (onImportComplete) onImportComplete();
@@ -196,7 +197,7 @@ const BackupManager = ({ onImportComplete }) => {
             setResultModal({
                 open: true,
                 success: false,
-                message: err.message || "Import failed.",
+                message: err.message || t("messages.importFailed"),
             });
         } finally {
             setImporting(false);
@@ -233,11 +234,11 @@ const BackupManager = ({ onImportComplete }) => {
 
                 <div style={{ display: "flex", flexDirection: "column", lineHeight: "1.2" }}>
                     <span style={{ fontSize: "10px", fontWeight: "600", color: "#0369a1", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-                        Data Safety
+                        {t("dataSafety")}
                     </span>
 
                     <span style={{ fontSize: "15px", fontWeight: "700", color: "#0c4a6e" }}>
-                        Backup & Restore
+                        {t("backupRestore")}
                     </span>
                 </div>
             </div>
@@ -252,11 +253,11 @@ const BackupManager = ({ onImportComplete }) => {
                     color="blue"
                     size="sm"
                 >
-                    Export Backup
+                    {t("exportBackup")}
                 </Button>
 
                 <FileInput
-                    placeholder="Choose backup file"
+                    placeholder={t("chooseBackupFile")}
                     value={file}
                     onChange={setFile}
                     accept=".json"
@@ -274,7 +275,7 @@ const BackupManager = ({ onImportComplete }) => {
                     color="green"
                     size="sm"
                 >
-                    Import Backup
+                    {t("importBackup")}
                 </Button>
             </Group>
 
@@ -283,7 +284,7 @@ const BackupManager = ({ onImportComplete }) => {
                 <div className={styles.progressContainer}>
                     <Progress value={progress} size="sm" radius="xl" striped animate />
                     <Text size="xs" color="dimmed" mt={4}>
-                        {importing ? "Importing" : "Exporting"}... {Math.round(progress)}%
+                        {importing ? t("importing") : t("exporting")}... {Math.round(progress)}%
                     </Text>
                 </div>
             )}
@@ -294,7 +295,7 @@ const BackupManager = ({ onImportComplete }) => {
                 onClose={() =>
                     setResultModal({ open: false, success: false, message: "" })
                 }
-                title={resultModal.success ? "Success" : "Error"}
+                title={resultModal.success ? t("success") : t("error")}
                 centered
                 size="sm"
             >

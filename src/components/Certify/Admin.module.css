@@ -87,6 +87,14 @@
     margin-bottom: 1.5rem;
 }
 
+/* ========== LANGUAGE TOGGLE ========== */
+.languageToggleWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
 .form :global(input),
 .container> :global(div[class*="mantine-TextInput-root"] input) {
     border: 2px solid #e2e8f0;

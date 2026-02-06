@@ -1,0 +1,65 @@
+{
+  "title": "Admin Certificate Panel",
+  "subtitle": "Manage Certificates",
+  "labels": {
+    "name": "Name",
+    "program": "Program",
+    "code": "Code",
+    "qr": "QR Code",
+    "actions": "Actions",
+    "search": "Search by name or program...",
+    "createdAt": "Created At",
+    "createdBy": "Created By"
+  },
+  "buttons": {
+    "addCertificate": "Add Certificate",
+    "download": "Download QR Code",
+    "delete": "Delete",
+    "logout": "Logout",
+    "confirmDelete": "Confirm Delete",
+    "cancel": "Cancel",
+    "import": "Import",
+    "export": "Export"
+  },
+  "placeholders": {
+    "participantName": "Participant Name",
+    "programName": "Program Name",
+    "password": "Your password"
+  },
+  "notifications": {
+    "certificateAdded": "Certificate Added",
+    "certificateAddedSuccess": "Certificate for {{name}} created successfully!",
+    "certificateDeleted": "Certificate Deleted",
+    "certificateDeletedSuccess": "Certificate removed successfully.",
+    "certificateNotFound": "No certificates found",
+    "downloadStarted": "Download Started",
+    "downloadSuccess": "QR code downloaded successfully.",
+    "qrNotFound": "QR Not Found",
+    "qrNotFoundMessage": "QR code not available for download."
+  },
+  "errors": {
+    "invalidInput": "Invalid Input",
+    "invalidInputMessage": "Please fill all fields with valid data.",
+    "notAuthenticated": "Not Authenticated",
+    "notAuthenticatedMessage": "Please log in again.",
+    "passwordRequired": "Password Required",
+    "passwordRequiredMessage": "Enter your password to confirm.",
+    "noSelection": "No Selection",
+    "noSelectionMessage": "No certificate selected for deletion.",
+    "incorrectPassword": "Incorrect password. Please try again.",
+    "permissionDenied": "Permission denied. Check Firestore security rules.",
+    "deleteFailed": "Delete Failed",
+    "addFailed": "Add Failed",
+    "failedToLoad": "Failed to Load",
+    "failedToLoadMessage": "Could not load certificates. Check your permissions."
+  },
+  "modals": {
+    "deleteTitle": "Confirm Delete — re-enter password",
+    "deleteMessage": "To delete this certificate, re-enter your admin password."
+  },
+  "titles": {
+    "admin": "Admin",
+    "certifyPanel": "Certificate Panel",
+    "qrCodeStats": "QR Code Statistics"
+  }
+}
