@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../../../firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { Container, Title, Text, Card, Stack, Badge, Loader, Center, Button, Menu } from "@mantine/core";
-import { IconCertificate, IconAlertCircle, IconCheck, IconWorld } from "@tabler/icons-react";
+import { Container, Title, Text, Card, Stack, Badge, Loader, Center } from "@mantine/core";
+import { IconAlertCircle, IconCheck } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
+import LanguageToggle from "../LanguageToggle";
 import styles from "./CertificateVerify.module.css";
 import stampImg from "../../assets/imgs/stamp.png"
 
@@ -16,8 +17,6 @@ const CertificateVerify = () => {
     const [error, setError] = useState(null);
 
     const { t, i18n } = useTranslation("verification/CertificateVerify");
-
-    const changeLang = (lng) => i18n.changeLanguage(lng);
 
     useEffect(() => {
         const verifyCertificate = async () => {
@@ -70,22 +69,7 @@ const CertificateVerify = () => {
     if (error) {
         return (
             <Container size="sm" className={styles.container}>
-
-                {/* Language Toggle */}
-                <div className={styles.langToggle}>
-                    <Menu shadow="md" width={160}>
-                        <Menu.Target>
-                            <Button variant="white" leftSection={<IconWorld size={18} />}>
-                                {i18n.language.toUpperCase()}
-                            </Button>
-                        </Menu.Target>
-
-                        <Menu.Dropdown>
-                            <Menu.Item onClick={() => changeLang("en")}>EN – English</Menu.Item>
-                            <Menu.Item onClick={() => changeLang("ar")}>AR – العربية</Menu.Item>
-                        </Menu.Dropdown>
-                    </Menu>
-                </div>
+                <LanguageToggle position="top-right" />
 
                 <Card shadow="md" padding="xl" radius="md" withBorder className={styles.errorCard}>
                     <Stack align="center" spacing="lg">
@@ -104,22 +88,7 @@ const CertificateVerify = () => {
     /** Success **/
     return (
         <Container size="sm" className={styles.container}>
-
-            {/* Top Right Language Toggle */}
-            <div className={styles.langToggle}>
-                <Menu shadow="md" width={160}>
-                    <Menu.Target>
-                        <Button variant="white" leftSection={<IconWorld size={18} />}>
-                            {i18n.language.toUpperCase()}
-                        </Button>
-                    </Menu.Target>
-
-                    <Menu.Dropdown>
-                        <Menu.Item onClick={() => changeLang("en")}>EN – English</Menu.Item>
-                        <Menu.Item onClick={() => changeLang("ar")}>AR – العربية</Menu.Item>
-                    </Menu.Dropdown>
-                </Menu>
-            </div>
+            <LanguageToggle position="top-right" />
 
             <Card shadow="lg" padding="xl" radius="md" withBorder className={styles.successCard}>
                 <Stack spacing="xl">
@@ -182,7 +151,7 @@ const CertificateVerify = () => {
                         {certificate.createdAt && (
                             <Text>
                                 <strong>{t("issued_on")}</strong>{" "}
-                                {certificate.createdAt.toDate().toLocaleDateString("id-ID")}
+                                {certificate.createdAt.toDate().toLocaleDateString(i18n.language === "ar" ? "ar-SA" : "en-US")}
                             </Text>
                         )}
                     </Stack>

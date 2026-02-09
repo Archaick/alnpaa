@@ -13,7 +13,7 @@ i18n
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
     },
-    ns: ["auth/AdminLogin"],
+    ns: ["auth/AdminLogin", "verification/CertificateVerify"],
     defaultNS: "auth/AdminLogin",
     interpolation: {
       escapeValue: false,

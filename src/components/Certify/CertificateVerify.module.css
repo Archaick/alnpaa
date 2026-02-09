@@ -44,7 +44,7 @@
    LANGUAGE TOGGLE
 ------------------------------------------------------- */
 .langToggle {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
     z-index: 99;
@@ -370,4 +370,45 @@
     .divider {
         margin: .75rem 0;
     }
+}
+
+/* -------------------------------------------------------
+   RTL (RIGHT-TO-LEFT) SUPPORT FOR ARABIC
+------------------------------------------------------- */
+:global(html[dir="rtl"]) .container {
+    direction: rtl;
+}
+
+:global(html[dir="rtl"]) .title,
+:global(html[dir="rtl"]) .program,
+:global(html[dir="rtl"]) .metadataLabel,
+:global(html[dir="rtl"]) .metadataValue {
+    text-align: center;
+    unicode-bidi: embed;
+}
+
+:global(html[dir="rtl"]) .metadata {
+    direction: rtl;
+}
+
+:global(html[dir="rtl"]) .metadataItem {
+    text-align: right;
+}
+
+:global(html[dir="rtl"]) .divider {
+    background: linear-gradient(to left, transparent, rgba(37, 99, 235, .18), rgba(124, 58, 237, .18), transparent);
+}
+
+:global(html[dir="rtl"]) .successCard::after,
+:global(html[dir="rtl"]) .errorCard::before {
+    left: auto;
+    right: 10px;
+}
+
+:global(html[dir="rtl"]) .successCard {
+    direction: rtl;
+}
+
+:global(html[dir="rtl"]) Text {
+    unicode-bidi: embed;
 }

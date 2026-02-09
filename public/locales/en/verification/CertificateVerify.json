@@ -1,0 +1,17 @@
+{
+  "loading": "Loading verification...",
+  "invalid_title": "Record Not Found",
+  "invalid_subtext": "The verification code you provided does not exist or has expired. Please check the code and try again.",
+  "authentic_badge": "Verified",
+  "verified_document": "Authenticated Record",
+  "issued_to": "Associated With",
+  "program": "Document/Record Type",
+  "document_code": "Verification Code",
+  "issued_on": "Issued On",
+  "footer_text": "This record has been digitally authenticated and verified by Alnpaa Digital Authentication System",
+  "errors": {
+    "no_code": "No verification code provided. Please check the URL.",
+    "not_found": "Record not found. The code does not exist in our archive.",
+    "failed": "Failed to verify record. Please try again later."
+  }
+}
