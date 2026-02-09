@@ -13,7 +13,7 @@
     "totalQRCodes": "Total QR Codes"
   },
   "buttons": {
-    "addCertificate": "Add Certificate",
+    "addCertificate": "Add Archive",
     "download": "Download QR Code",
     "delete": "Delete",
     "logout": "Logout",

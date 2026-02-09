@@ -20,6 +20,7 @@ const LanguageToggle = ({ position = "top-right" }) => {
       }
     };
 
+    
     i18n?.on && i18n.on("languageChanged", handleChange);
 
     // initialize direction
