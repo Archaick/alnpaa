@@ -1,14 +1,14 @@
 {
-  "title": "دخول الإداري",
-  "subtitle": "إدارة شهادات مركز تدارس إندونيسيا",
+  "title": "بوابة التوثيق الرقمي",
+  "subtitle": "مؤسسة النبأ العظيم",
   "emailLabel": "عنوان البريد الإلكتروني",
   "emailPlaceholder": "admin@example.com",
   "passwordLabel": "كلمة المرور",
   "passwordPlaceholder": "أدخل كلمة المرور الخاصة بك",
   "signInButton": "تسجيل الدخول",
   "signingInButton": "جاري تسجيل الدخول...",
-  "footerText": "نظام إدارة الشهادات الآمن",
-  "subFooterText": "منتج من مركز تدارس إندونيسيا",
+  "footerText": "منصة توثيق المستندات والشهادات الرقمية",
+  "subFooterText": "طور بالتعاون مع مركز التدارس إندونيسيا",
   "errors": {
     "invalidEmailOrPassword": "بريد إلكتروني أو كلمة مرور غير صحيحة",
     "invalidEmail": "يرجى إدخال عنوان بريد إلكتروني صحيح",

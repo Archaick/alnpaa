@@ -1,14 +1,14 @@
 {
-  "title": "Admin Login",
-  "subtitle": "MTI Certificate Management",
+  "title": "Digital Authentication System",
+  "subtitle": "By Alnpaa Foundation",
   "emailLabel": "Email Address",
   "emailPlaceholder": "admin@example.com",
   "passwordLabel": "Password",
   "passwordPlaceholder": "Enter your password",
   "signInButton": "Sign In",
   "signingInButton": "Signing in...",
-  "footerText": "Secure Certificate Management System",
-  "subFooterText": "Product by Markaz Tadarus Indonesia",
+  "footerText": "Secure Digital Authentication Platform",
+  "subFooterText": "Developed in partnership with Markaz Tadarus Indonesia",
   "errors": {
     "invalidEmailOrPassword": "Invalid email or password",
     "invalidEmail": "Please enter a valid email address",
