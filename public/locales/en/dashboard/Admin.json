@@ -9,7 +9,8 @@
     "actions": "Actions",
     "search": "Search by name or program...",
     "createdAt": "Created At",
-    "createdBy": "Created By"
+    "createdBy": "Created By",
+    "totalQRCodes": "Total QR Codes"
   },
   "buttons": {
     "addCertificate": "Add Certificate",

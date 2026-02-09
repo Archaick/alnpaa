@@ -45,6 +45,20 @@ const LanguageToggle = ({ position = "top-right" }) => {
           { label: "العربية", value: "ar" }
         ]}
         size="sm"
+        color="blue"
+        radius="md"
+        styles={{
+          root: {
+            backgroundColor: "#f5f5f5",
+            border: "2px solid #e0e0e0"
+          },
+          control: {
+            borderColor: "#e0e0e0"
+          },
+          labelActive: {
+            color: "#fff"
+          }
+        }}
       />
     </div>
   );

@@ -1,11 +1,13 @@
 // src/.../QrStats.jsx
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import CountUp from "react-countup";
 import { IconQrcode } from "@tabler/icons-react";
 import { db } from "../../../firebaseConfig";
 import { collection, getCountFromServer } from "firebase/firestore";
 
 const QrStats = () => {
+    const { t } = useTranslation("dashboard/Admin");
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
@@ -40,7 +42,7 @@ const QrStats = () => {
 
             <div style={{ display: "flex", flexDirection: "column", lineHeight: "1.1" }}>
                 <span style={{ fontSize: "11px", fontWeight: "500", color: "#666" }}>
-                    Total QR Codes
+                    {t("labels.totalQRCodes")}
                 </span>
 
                 <span style={{ fontSize: "15px", fontWeight: "700" }}>
