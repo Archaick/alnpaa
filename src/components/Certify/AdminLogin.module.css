@@ -59,7 +59,21 @@
     background-image: url('../../assets/imgs/alnpaa.png');
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.loginCard::after {
+    content: "";
+    position: absolute;
+    bottom: 20px;
+    left: 12px;
+    width: 65px;
+    height: 65px;
+    background-image: url('../../assets/imgs/tadarus.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.2;
     pointer-events: none;
     z-index: 0;
 }
