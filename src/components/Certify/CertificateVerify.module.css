@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1e3c72, #2a5298 50%, #7e22ce);
+    background: linear-gradient(135deg, #1a1a1a, #3d3d3d 50%, #9B8B6B);
     position: relative;
     overflow: hidden;
 }
@@ -21,7 +21,7 @@
     right: -120px;
     width: 520px;
     height: 520px;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(155, 139, 107, 0.12);
     border-radius: 50%;
     filter: blur(120px);
     transform: rotate(10deg);
@@ -33,9 +33,9 @@
     inset: 0;
     opacity: 0.08;
     background-image:
-        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, .12) 0%, transparent 45%),
-        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, .08) 0%, transparent 45%),
-        radial-gradient(circle at 40% 20%, rgba(255, 255, 255, .06) 0%, transparent 45%);
+        radial-gradient(circle at 20% 50%, rgba(155, 139, 107, .18) 0%, transparent 45%),
+        radial-gradient(circle at 80% 80%, rgba(155, 139, 107, .12) 0%, transparent 45%),
+        radial-gradient(circle at 40% 20%, rgba(255, 255, 255, .08) 0%, transparent 45%);
     pointer-events: none;
     z-index: -2;
 }
@@ -61,8 +61,8 @@
     backdrop-filter: blur(12px);
     border-radius: 20px;
     padding: 3rem;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 35px 100px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(155, 139, 107, 0.2);
+    box-shadow: 0 35px 100px rgba(0, 0, 0, 0.4);
     position: relative;
     z-index: 2;
     animation: fadeSlide 0.6s ease-out;
@@ -80,8 +80,8 @@
     left: 10px;
     width: 260px;
     height: 260px;
-    background: url('/MTIFavicon.png') no-repeat center / contain;
-    opacity: 0.05;
+    background: url('/alnaba-logo.png') no-repeat center / contain;
+    opacity: 0.04;
     pointer-events: none;
     z-index: 0;
 }
@@ -100,8 +100,8 @@
 }
 
 .iconWrapper {
-    background: linear-gradient(135deg, #10b981, #059669);
-    box-shadow: 0 12px 36px rgba(16, 185, 129, .28);
+    background: linear-gradient(135deg, #9B8B6B, #7a6d54);
+    box-shadow: 0 12px 36px rgba(155, 139, 107, .35);
     animation: scaleIn 1s ease-out 0.2s both;
     position: relative;
 }
@@ -111,7 +111,7 @@
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    border: 4px solid rgba(16, 185, 129, .4);
+    border: 4px solid rgba(155, 139, 107, .45);
     animation: ring 3s ease-out infinite;
 }
 
@@ -146,9 +146,9 @@
     color: white;
 
     background: linear-gradient(135deg,
-            rgba(30, 60, 114, 0.85),
-            rgba(42, 82, 152, 0.85),
-            rgba(126, 34, 206, 0.85));
+            rgba(0, 0, 0, 0.85),
+            rgba(61, 61, 61, 0.85),
+            rgba(155, 139, 107, 0.85));
 
     padding: 0.5rem 0.7rem;
     border-radius: 12px;
@@ -165,8 +165,8 @@
     text-align: center;
     padding: 1.5rem;
     border-radius: 12px;
-    background: linear-gradient(135deg, rgba(37, 99, 235, .03), rgba(124, 58, 237, .03));
-    border: 1px solid rgba(37, 99, 235, .06);
+    background: linear-gradient(135deg, rgba(155, 139, 107, .05), rgba(155, 139, 107, .08));
+    border: 1px solid rgba(155, 139, 107, .15);
 }
 
 /* -------------------------------------------------------
@@ -176,7 +176,7 @@
     height: 2px;
     border-radius: 4px;
     margin: 1.5rem 0;
-    background: linear-gradient(to right, transparent, rgba(37, 99, 235, .18), rgba(124, 58, 237, .18), transparent);
+    background: linear-gradient(to right, transparent, rgba(155, 139, 107, .25), rgba(122, 109, 84, .25), transparent);
 }
 
 .metadata {
@@ -185,8 +185,8 @@
     gap: 1.5rem;
     padding: 1.5rem;
     border-radius: 12px;
-    background: linear-gradient(135deg, #fbfdff, #f6f9fb);
-    border: 1px solid #e6eef7;
+    background: linear-gradient(135deg, #fbfbfa, #f8f7f5);
+    border: 1px solid rgba(155, 139, 107, .15);
 }
 
 .metadataItem {
@@ -213,7 +213,7 @@
 ------------------------------------------------------- */
 .footer {
     padding-top: 1rem;
-    border-top: 1px solid #e9eef6;
+    border-top: 1px solid rgba(155, 139, 107, .15);
 }
 
 .footerText {
@@ -276,7 +276,7 @@
     }
 
     40% {
-        opacity: .35;
+        opacity: .4;
     }
 
     100% {
@@ -396,7 +396,7 @@
 }
 
 :global(html[dir="rtl"]) .divider {
-    background: linear-gradient(to left, transparent, rgba(37, 99, 235, .18), rgba(124, 58, 237, .18), transparent);
+    background: linear-gradient(to left, transparent, rgba(155, 139, 107, .25), rgba(122, 109, 84, .25), transparent);
 }
 
 :global(html[dir="rtl"]) .successCard::after,
