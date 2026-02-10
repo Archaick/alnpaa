@@ -52,14 +52,14 @@
 .loginCard::before {
     content: "";
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    width: 260px;
-    height: 260px;
-    background-image: url('/alnaba-logo.png');
+    top: 12px;
+    right: 12px;
+    width: 120px;
+    height: 120px;
+    background-image: url('../../assets/imgs/alnpaa.png');
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.04;
+    opacity: 0.5;
     pointer-events: none;
     z-index: 0;
 }

@@ -73,15 +73,16 @@
 }
 
 /* Watermark */
-.successCard::after {
+.successCard::after,
+.errorCard::after {
     content: "";
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    width: 260px;
-    height: 260px;
-    background: url('/alnaba-logo.png') no-repeat center / contain;
-    opacity: 0.04;
+    top: 30px;
+    right: 12px;
+    width: 120px;
+    height: 120px;
+    background: url('../../assets/imgs/alnpaa.png') no-repeat center / contain;
+    opacity: 0.5;
     pointer-events: none;
     z-index: 0;
 }
@@ -400,9 +401,9 @@
 }
 
 :global(html[dir="rtl"]) .successCard::after,
-:global(html[dir="rtl"]) .errorCard::before {
+:global(html[dir="rtl"]) .errorCard::after {
     left: auto;
-    right: 10px;
+    right: 12px;
 }
 
 :global(html[dir="rtl"]) .successCard {
