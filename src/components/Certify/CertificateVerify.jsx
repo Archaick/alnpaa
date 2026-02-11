@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../../../firebaseConfig";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { Container, Title, Text, Card, Stack, Badge, Loader, Center } from "@mantine/core";
 import { IconAlertCircle, IconCheck } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
@@ -27,19 +27,19 @@ const CertificateVerify = () => {
             }
 
             try {
-                const certCollection = collection(db, "certificates");
-                const q = query(certCollection, where("code", "==", code.toUpperCase()));
-                const snapshot = await getDocs(q);
+                const normalizedCode = code.toUpperCase();
+                const certRef = doc(db, "certificates", normalizedCode);
+                const certSnap = await getDoc(certRef);
 
-                if (snapshot.empty) {
+                if (!certSnap.exists()) {
                     setError(t("errors.not_found"));
                     setLoading(false);
                     return;
                 }
 
                 setCertificate({
-                    id: snapshot.docs[0].id,
-                    ...snapshot.docs[0].data(),
+                    id: certSnap.id,
+                    ...certSnap.data(),
                 });
 
             } catch (err) {

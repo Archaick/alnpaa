@@ -6,15 +6,15 @@ import QrStats from "./QrStats";
 import BackupManager from "./BackupManager";
 import {
     collection,
-    addDoc,
     getDocs,
+    getDoc,
+    setDoc,
     deleteDoc,
     doc,
     query,
     orderBy,
     startAfter,
     limit as firestoreLimit,
-    where,
 } from "firebase/firestore";
 import {
     Button,
@@ -87,9 +87,9 @@ const Admin = () => {
 
     const isCodeUnique = async (code) => {
         try {
-            const q = query(certCollection, where("code", "==", code));
-            const snapshot = await getDocs(q);
-            return snapshot.empty;
+            const certRef = doc(db, "certificates", code);
+            const snapshot = await getDoc(certRef);
+            return !snapshot.exists();
         } catch (err) {
             console.error("Error checking code uniqueness:", err);
             return false;
@@ -199,8 +199,9 @@ const Admin = () => {
                 createdBy: auth.currentUser.email,
             };
 
-            const docRef = await addDoc(certCollection, newData);
-            const addedCert = { id: docRef.id, ...newData };
+            const certRef = doc(db, "certificates", code);
+            await setDoc(certRef, newData);
+            const addedCert = { id: code, ...newData };
 
             const qrDataUrl = await QRCode.toDataURL(
                 `${window.location.origin}/verify/${code}`,
@@ -208,7 +209,7 @@ const Admin = () => {
             );
 
             setCertificates((prev) => [addedCert, ...prev.slice(0, ITEMS_PER_PAGE - 1)]);
-            setQrCodes((prev) => ({ ...prev, [docRef.id]: qrDataUrl }));
+            setQrCodes((prev) => ({ ...prev, [code]: qrDataUrl }));
             setNewCert({ name: "", program: "" });
 
             showNotification("success", t("notifications.certificateAdded"), t("notifications.certificateAddedSuccess", { name: sanitizedName }));

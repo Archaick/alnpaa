@@ -150,6 +150,8 @@ const BackupManager = ({ onImportComplete }) => {
                 if (!cert.name || !cert.program || !cert.code) {
                     throw new Error(t("messages.missingFields"));
                 }
+
+                cert.code = String(cert.code).trim().toUpperCase();
             }
 
             let imported = 0;
@@ -178,14 +180,15 @@ const BackupManager = ({ onImportComplete }) => {
 
                 // Add non-duplicates to batch
                 for (const cert of chunk) {
-                    if (existingCodes.has(cert.code)) {
+                    const normalizedCode = cert.code;
+                    if (existingCodes.has(normalizedCode)) {
                         skipped++;
                     } else {
-                        const newDocRef = doc(certCollection);
+                        const newDocRef = doc(certCollection, normalizedCode);
                         currentBatch.set(newDocRef, {
                             name: cert.name,
                             program: cert.program,
-                            code: cert.code,
+                            code: normalizedCode,
                             createdAt: cert.createdAt
                                 ? new Date(cert.createdAt)
                                 : new Date(),
