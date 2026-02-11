@@ -7,6 +7,7 @@
   "importing": "Importing",
   "exporting": "Exporting",
   "lastBackupLabel": "Last backup:",
+  "lastBackupLoading": "Loading...",
   "lastBackupNever": "Never",
   "success": "Success",
   "error": "Error",

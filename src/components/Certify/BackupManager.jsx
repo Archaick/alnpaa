@@ -1,5 +1,5 @@
 // src/.../BackupManager.jsx - FINAL OPTIMIZED VERSION
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
     Button,
     Group,
@@ -12,6 +12,9 @@ import {
 import {
     collection,
     getDocs,
+    getDoc,
+    setDoc,
+    serverTimestamp,
     query,
     where,
     writeBatch,
@@ -31,22 +34,14 @@ import {
 import styles from "./BackupManager.module.css";
 import { useTranslation } from "react-i18next";
 
-const LAST_BACKUP_STORAGE_KEY = "alnpaa:lastBackupAt";
-
 const BackupManager = ({ onImportComplete }) => {
     const { t, i18n } = useTranslation("dashboard/BackupManager");
     const [importing, setImporting] = useState(false);
     const [exporting, setExporting] = useState(false);
     const [progress, setProgress] = useState(0);
     const [file, setFile] = useState(null);
-    const [lastBackupAt, setLastBackupAt] = useState(() => {
-        try {
-            return localStorage.getItem(LAST_BACKUP_STORAGE_KEY);
-        } catch (err) {
-            console.error("Failed to load last backup time:", err);
-            return null;
-        }
-    });
+    const [lastBackupAt, setLastBackupAt] = useState(null);
+    const [lastBackupLoaded, setLastBackupLoaded] = useState(false);
 
     const [resultModal, setResultModal] = useState({
         open: false,
@@ -55,10 +50,34 @@ const BackupManager = ({ onImportComplete }) => {
     });
 
     const certCollection = collection(db, "certificates");
+    const backupMetaRef = doc(db, "system", "backupMeta");
     const QUERY_CHUNK_SIZE = 10; // Firestore "in" limit
     const BATCH_WRITE_LIMIT = 500; // Firestore batch limit
 
+    useEffect(() => {
+        const loadLastBackup = async () => {
+            try {
+                const snapshot = await getDoc(backupMetaRef);
+                if (snapshot.exists()) {
+                    const rawValue = snapshot.data()?.lastExportAt;
+                    if (rawValue?.toDate) {
+                        setLastBackupAt(rawValue.toDate().toISOString());
+                    } else if (typeof rawValue === "string") {
+                        setLastBackupAt(rawValue);
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to fetch last backup time:", err);
+            } finally {
+                setLastBackupLoaded(true);
+            }
+        };
+
+        loadLastBackup();
+    }, [backupMetaRef]);
+
     const lastBackupText = useMemo(() => {
+        if (!lastBackupLoaded) return t("lastBackupLoading");
         if (!lastBackupAt) return t("lastBackupNever");
         const parsedDate = new Date(lastBackupAt);
         if (Number.isNaN(parsedDate.getTime())) return t("lastBackupNever");
@@ -67,7 +86,7 @@ const BackupManager = ({ onImportComplete }) => {
             dateStyle: "medium",
             timeStyle: "short",
         }).format(parsedDate);
-    }, [i18n.language, lastBackupAt, t]);
+    }, [i18n.language, lastBackupAt, lastBackupLoaded, t]);
 
     /* -------------------------------------------------------
        EXPORT BACKUP - Optimized for large datasets
@@ -99,12 +118,11 @@ const BackupManager = ({ onImportComplete }) => {
             link.click();
 
             URL.revokeObjectURL(url);
-            const backupTime = new Date().toISOString();
             try {
-                localStorage.setItem(LAST_BACKUP_STORAGE_KEY, backupTime);
-                setLastBackupAt(backupTime);
+                await setDoc(backupMetaRef, { lastExportAt: serverTimestamp() }, { merge: true });
+                setLastBackupAt(new Date().toISOString());
             } catch (err) {
-                console.error("Failed to save last backup time:", err);
+                console.error("Failed to save shared last backup time:", err);
             }
 
             setResultModal({
