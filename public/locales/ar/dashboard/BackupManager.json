@@ -6,6 +6,8 @@
   "chooseBackupFile": "اختر ملف النسخة الاحتياطية",
   "importing": "جاري الاستيراد",
   "exporting": "جاري التصدير",
+  "lastBackupLabel": "آخر نسخة احتياطية:",
+  "lastBackupNever": "لا يوجد",
   "success": "نجاح",
   "error": "خطأ",
   "messages": {

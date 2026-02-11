@@ -45,6 +45,23 @@
     position: relative;
 }
 
+.lastBackupRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: -4px 2px 10px;
+}
+
+.lastBackupLabel {
+    color: #475569;
+    font-weight: 600;
+}
+
+.lastBackupValue {
+    color: #0f172a;
+    font-weight: 700;
+}
+
 /* ✅ Responsive */
 @media (max-width: 768px) {
     .backupContainer {
@@ -58,6 +75,11 @@
 
     .syncIcon {
         animation-duration: 2.5s;
+    }
+
+    .lastBackupRow {
+        margin-top: 2px;
+        margin-bottom: 12px;
     }
 }
 

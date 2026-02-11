@@ -6,6 +6,8 @@
   "chooseBackupFile": "Choose backup file",
   "importing": "Importing",
   "exporting": "Exporting",
+  "lastBackupLabel": "Last backup:",
+  "lastBackupNever": "Never",
   "success": "Success",
   "error": "Error",
   "messages": {

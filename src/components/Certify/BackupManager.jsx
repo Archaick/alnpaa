@@ -1,5 +1,5 @@
 // src/.../BackupManager.jsx - FINAL OPTIMIZED VERSION
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
     Button,
     Group,
@@ -31,12 +31,22 @@ import {
 import styles from "./BackupManager.module.css";
 import { useTranslation } from "react-i18next";
 
+const LAST_BACKUP_STORAGE_KEY = "alnpaa:lastBackupAt";
+
 const BackupManager = ({ onImportComplete }) => {
-    const { t } = useTranslation("dashboard/BackupManager");
+    const { t, i18n } = useTranslation("dashboard/BackupManager");
     const [importing, setImporting] = useState(false);
     const [exporting, setExporting] = useState(false);
     const [progress, setProgress] = useState(0);
     const [file, setFile] = useState(null);
+    const [lastBackupAt, setLastBackupAt] = useState(() => {
+        try {
+            return localStorage.getItem(LAST_BACKUP_STORAGE_KEY);
+        } catch (err) {
+            console.error("Failed to load last backup time:", err);
+            return null;
+        }
+    });
 
     const [resultModal, setResultModal] = useState({
         open: false,
@@ -47,6 +57,17 @@ const BackupManager = ({ onImportComplete }) => {
     const certCollection = collection(db, "certificates");
     const QUERY_CHUNK_SIZE = 10; // Firestore "in" limit
     const BATCH_WRITE_LIMIT = 500; // Firestore batch limit
+
+    const lastBackupText = useMemo(() => {
+        if (!lastBackupAt) return t("lastBackupNever");
+        const parsedDate = new Date(lastBackupAt);
+        if (Number.isNaN(parsedDate.getTime())) return t("lastBackupNever");
+
+        return new Intl.DateTimeFormat(i18n.language === "ar" ? "ar-SA" : "en-US", {
+            dateStyle: "medium",
+            timeStyle: "short",
+        }).format(parsedDate);
+    }, [i18n.language, lastBackupAt, t]);
 
     /* -------------------------------------------------------
        EXPORT BACKUP - Optimized for large datasets
@@ -78,6 +99,13 @@ const BackupManager = ({ onImportComplete }) => {
             link.click();
 
             URL.revokeObjectURL(url);
+            const backupTime = new Date().toISOString();
+            try {
+                localStorage.setItem(LAST_BACKUP_STORAGE_KEY, backupTime);
+                setLastBackupAt(backupTime);
+            } catch (err) {
+                console.error("Failed to save last backup time:", err);
+            }
 
             setResultModal({
                 open: true,
@@ -244,6 +272,15 @@ const BackupManager = ({ onImportComplete }) => {
             </div>
 
             {/* ✅ Controls */}
+            <div className={styles.lastBackupRow}>
+                <Text size="xs" className={styles.lastBackupLabel}>
+                    {t("lastBackupLabel")}
+                </Text>
+                <Text size="xs" className={styles.lastBackupValue}>
+                    {lastBackupText}
+                </Text>
+            </div>
+
             <Group spacing="sm">
                 <Button
                     leftIcon={<IconDatabaseExport size={16} />}
