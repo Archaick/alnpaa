@@ -28,11 +28,11 @@
     "password": "Your password"
   },
   "notifications": {
-    "certificateAdded": "Certificate Added",
-    "certificateAddedSuccess": "Certificate for {{name}} created successfully!",
-    "certificateDeleted": "Certificate Deleted",
-    "certificateDeletedSuccess": "Certificate removed successfully.",
-    "certificateNotFound": "No certificates found",
+    "certificateAdded": "Record Added",
+    "certificateAddedSuccess": "Record for {{name}} created successfully!",
+    "certificateDeleted": "Record Deleted",
+    "certificateDeletedSuccess": "Record removed successfully.",
+    "certificateNotFound": "No Record found",
     "downloadStarted": "Download Started",
     "downloadSuccess": "QR code downloaded successfully.",
     "qrNotFound": "QR Not Found",
@@ -46,21 +46,21 @@
     "passwordRequired": "Password Required",
     "passwordRequiredMessage": "Enter your password to confirm.",
     "noSelection": "No Selection",
-    "noSelectionMessage": "No certificate selected for deletion.",
+    "noSelectionMessage": "No record selected for deletion.",
     "incorrectPassword": "Incorrect password. Please try again.",
     "permissionDenied": "Permission denied. Check Firestore security rules.",
     "deleteFailed": "Delete Failed",
     "addFailed": "Add Failed",
     "failedToLoad": "Failed to Load",
-    "failedToLoadMessage": "Could not load certificates. Check your permissions."
+    "failedToLoadMessage": "Could not load records. Check your permissions."
   },
   "modals": {
     "deleteTitle": "Confirm Delete — re-enter password",
-    "deleteMessage": "To delete this certificate, re-enter your admin password."
+    "deleteMessage": "To delete this record, re-enter your admin password."
   },
   "titles": {
     "admin": "Admin",
-    "certifyPanel": "Certificate Panel",
+    "certifyPanel": "Record Panel",
     "qrCodeStats": "QR Code Statistics"
   }
 }
