@@ -28,11 +28,11 @@
     "password": "كلمة المرور الخاصة بك"
   },
   "notifications": {
-    "certificateAdded": "تمت إضافة الشهادة",
-    "certificateAddedSuccess": "تم إنشاء الشهادة لـ {{name}} بنجاح!",
-    "certificateDeleted": "تم حذف الشهادة",
-    "certificateDeletedSuccess": "تم إزالة الشهادة بنجاح.",
-    "certificateNotFound": "لم يتم العثور على شهادات",
+    "certificateAdded": "تمت إضافة الوثيقة",
+    "certificateAddedSuccess": "تم إنشاء الوثيقةلـ {{name}} بنجاح!",
+    "certificateDeleted": "تم حذف الوثيقة",
+    "certificateDeletedSuccess": "تم إزالة الوثيقة بنجاح.",
+    "certificateNotFound": "لم يتم العثور على وثيقة",
     "downloadStarted": "بدأ التحميل",
     "downloadSuccess": "تم تحميل رمز الاستجابة السريعة بنجاح.",
     "qrNotFound": "رمز الاستجابة السريعة غير موجود",
@@ -46,21 +46,21 @@
     "passwordRequired": "كلمة المرور مطلوبة",
     "passwordRequiredMessage": "أدخل كلمة المرور الخاصة بك للتأكيد.",
     "noSelection": "لا يوجد اختيار",
-    "noSelectionMessage": "لم يتم تحديد أي شهادة للحذف.",
+    "noSelectionMessage": "لم يتم تحديد أي وثيقة للحذف.",
     "incorrectPassword": "كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.",
     "permissionDenied": "تم رفض الإذن. تحقق من قواعد أمان Firestore.",
     "deleteFailed": "فشل الحذف",
     "addFailed": "فشلت الإضافة",
     "failedToLoad": "فشل التحميل",
-    "failedToLoadMessage": "لم يتمكن من تحميل الشهادات. تحقق من أذوناتك."
+    "failedToLoadMessage": "لم يتمكن من تحميل الوثائق. تحقق من أذوناتك."
   },
   "modals": {
     "deleteTitle": "أكد الحذف — أعد إدخال كلمة المرور",
-    "deleteMessage": "لحذف هذه الشهادة، أعد إدخال كلمة المرور الإدارية الخاصة بك."
+    "deleteMessage": "لحذف هذه الوثيقة، أعد إدخال كلمة المرور الإدارية الخاصة بك."
   },
   "titles": {
     "admin": "مسؤول",
-    "certifyPanel": "لوحة الشهادات",
+    "certifyPanel": "لوحة الوثائق",
     "qrCodeStats": "إحصائيات رمز الاستجابة السريعة"
   }
 }
