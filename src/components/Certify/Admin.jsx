@@ -1,5 +1,5 @@
 // src/.../Admin.jsx - Final Refactored Version
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./Admin.module.css";
 import { db, auth } from "../../../firebaseConfig";
 import QrStats from "./QrStats";
@@ -15,6 +15,7 @@ import {
     orderBy,
     startAfter,
     limit as firestoreLimit,
+    getCountFromServer,
 } from "firebase/firestore";
 import {
     Button,
@@ -54,7 +55,9 @@ const Admin = () => {
     const [actionLoading, setActionLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [lastVisible, setLastVisible] = useState(null);
+    const [totalCount, setTotalCount] = useState(null);
+    const [needsCountRefresh, setNeedsCountRefresh] = useState(true);
+    const pageCursorsRef = useRef({});
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [deleteTargetId, setDeleteTargetId] = useState(null);
     const [reauthPassword, setReauthPassword] = useState("");
@@ -141,28 +144,57 @@ const Admin = () => {
     };
 
     // ========== FETCH CERTIFICATES ==========
+    const ensureCursorForPage = async (pageNum) => {
+        if (pageNum <= 1) return null;
+        if (pageCursorsRef.current[pageNum - 1]) {
+            return pageCursorsRef.current[pageNum - 1];
+        }
+
+        let cursor = null;
+        for (let p = 1; p <= pageNum - 1; p++) {
+            const q = cursor
+                ? query(certCollection, orderBy("createdAt", "desc"), startAfter(cursor), firestoreLimit(ITEMS_PER_PAGE))
+                : query(certCollection, orderBy("createdAt", "desc"), firestoreLimit(ITEMS_PER_PAGE));
+            const snap = await getDocs(q);
+            if (snap.docs.length === 0) {
+                return null;
+            }
+            cursor = snap.docs[snap.docs.length - 1];
+            pageCursorsRef.current[p] = cursor;
+        }
+        return cursor;
+    };
+
+    const fetchCountIfNeeded = async () => {
+        if (!needsCountRefresh && totalCount !== null) return;
+        const snapshot = await getCountFromServer(certCollection);
+        const count = snapshot.data().count || 0;
+        setTotalCount(count);
+        setTotalPages(Math.max(1, Math.ceil(count / ITEMS_PER_PAGE)));
+        setNeedsCountRefresh(false);
+    };
+
     const fetchCertificates = async (pageNum = 1) => {
         // Only sign out if truly unauthenticated
         if (!verifyAdminAuth()) return;
 
         setLoading(true);
         try {
-            let qQuery = query(certCollection, orderBy("createdAt", "desc"), firestoreLimit(ITEMS_PER_PAGE));
-
-            if (pageNum > 1 && lastVisible) {
-                qQuery = query(certCollection, orderBy("createdAt", "desc"), startAfter(lastVisible), firestoreLimit(ITEMS_PER_PAGE));
-            }
+            const cursor = await ensureCursorForPage(pageNum);
+            const qQuery = cursor
+                ? query(certCollection, orderBy("createdAt", "desc"), startAfter(cursor), firestoreLimit(ITEMS_PER_PAGE))
+                : query(certCollection, orderBy("createdAt", "desc"), firestoreLimit(ITEMS_PER_PAGE));
 
             const snapshot = await getDocs(qQuery);
             const certData = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
 
             setCertificates(certData);
             if (snapshot.docs.length > 0) {
-                setLastVisible(snapshot.docs[snapshot.docs.length - 1]);
+                pageCursorsRef.current[pageNum] = snapshot.docs[snapshot.docs.length - 1];
             }
 
             setQrCodes(await generateQRCodes(certData));
-            setTotalPages(Math.max(pageNum, snapshot.docs.length === ITEMS_PER_PAGE ? pageNum + 1 : pageNum));
+            await fetchCountIfNeeded();
         } catch (err) {
             console.error("Error fetching certificates:", err);
             // Do NOT sign out, just show error
@@ -211,6 +243,7 @@ const Admin = () => {
             setCertificates((prev) => [addedCert, ...prev.slice(0, ITEMS_PER_PAGE - 1)]);
             setQrCodes((prev) => ({ ...prev, [code]: qrDataUrl }));
             setNewCert({ name: "", program: "" });
+            setNeedsCountRefresh(true);
 
             showNotification("success", t("notifications.certificateAdded"), t("notifications.certificateAddedSuccess", { name: sanitizedName }));
         } catch (err) {
@@ -259,6 +292,7 @@ const Admin = () => {
                 const { [deleteTargetId]: _, ...rest } = prev;
                 return rest;
             });
+            setNeedsCountRefresh(true);
 
             closeDeleteModal();
             showNotification("success", t("notifications.certificateDeleted"), t("notifications.certificateDeletedSuccess"));
@@ -337,7 +371,7 @@ const Admin = () => {
                 </Button>
             </div>
 
-            <BackupManager onImportComplete={() => { setPage(1); fetchCertificates(1); }} />
+            <BackupManager onImportComplete={() => { setNeedsCountRefresh(true); setPage(1); fetchCertificates(1); }} />
 
             <div className={styles.form}>
                 <TextInput
